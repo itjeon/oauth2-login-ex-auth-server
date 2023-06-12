@@ -64,8 +64,8 @@ public class SecurityConfig {
 //          - email
 //          - profile
     	ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("google")
-    			.clientId("791176758978-evnnmhtm9uvdm515qfbi855beqlmn75g.apps.googleusercontent.com")
-    			.clientSecret("CoyCdi-dHr0TJHybCUyD7oFf")
+    			.clientId("")
+    			.clientSecret("")
     			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 //    			.redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
     			.redirectUri("http://localhost:8080/login/oauth2/code/google")
