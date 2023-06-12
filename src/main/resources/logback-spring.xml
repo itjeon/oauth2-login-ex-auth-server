@@ -1,0 +1,15 @@
+<configuration>
+
+	<springProperty name="LOG_FILE_NAME" source="spring.application.name" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <property name="LOG_FILE" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/${LOG_FILE_NAME}.log"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    
+    <logger name="com.itjeon" level="TRACE"/>
+    <logger name="org.springframework.security.web.access.intercept" level="TRACE"/>
+    
+</configuration>

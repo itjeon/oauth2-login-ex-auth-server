@@ -1,0 +1,73 @@
+server:
+  port: 8080
+  
+  #JSP수정시 서버 재시작없이 바로 적용될 수 있게 설정
+  servlet.jsp.init-parameters.development: true
+  
+spring:
+  profiles.active: local
+  mvc: 
+    view:
+      prefix: '/WEB-INF/views/'
+      suffix: '.jsp'
+  
+  # 데이터 소스 설정
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:postgresql://localhost:5432/testDb?charSet=UTF-8
+    #driver-class-name: org.postgresql.Driver 
+    #url: jdbc:postgresql://localhost:5432/testDb?charSet=UTF-8
+    username: ins
+    password: usr!23
+    hikari:
+      pool-name: jpa-hikari-pool
+      maximum-pool-size: 5
+      jdbc-url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      driver-class-name: ${spring.datasource.driver-class-name}
+      data-source-properties:
+        rewriteBatchedStatements: true
+  # JPA 설정
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          "[import_files_sql_extractor]": org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+        "[current_session_context_class]": org.springframework.orm.hibernate5.SpringSessionContext
+        "[default_batch_fetch_size]": ${chunkSize:100}
+        "[jdbc.batch_size]": 20
+        "[order_inserts]": true
+        "[order_updates]": true
+        "[format_sql]": true
+        #temp:
+          #use_jdbc_metadata_defaults: false
+          
+  # Security OAuth
+  security:
+    oauth2.client:
+      registration:
+        google-login:
+          provider: google
+          client-id: 791176758978-evnnmhtm9uvdm515qfbi855beqlmn75g.apps.googleusercontent.com
+          client-secret: CoyCdi-dHr0TJHybCUyD7oFf
+          authorization-grant-type: authorization_code
+          redirect-uri: http://localhost:8080/login/oauth2/code/google
+          scope:
+            - email
+            - profile
+
+# 토큰 관련 secret Key 및 RedirectUri 설정
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpiry: 1800000
+    refreshTokenExpiry: 604800000
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth/redirect
